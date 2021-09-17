@@ -46,22 +46,19 @@ def index():
 
 @app.route('/all')
 def all_coordinate():
-    all_coordinates = AoiCoordinate.query.all()
-    # for coordinate in all_coordinates:
-    #     coordinate = wkb.loads(coordinate, hex=True)
-    #     print(coordinate)
+    coordinates = AoiCoordinate.query.all()
+
     all_cord = []
-    for location in all_coordinates:
+    for location in coordinates:
         location_coordinate = to_shape(location.coordinate)
         location_aoi = location.aoi
         location = {
-            'coordinate': location_coordinate,
+            'location_coordinate': location_coordinate,
             'location_aoi': location_aoi
         }
         all_cord.append(location)
-        print(location)
 
-    return render_template('all.html', all_coordinat=all_cord)
+    return render_template('all.html', all_coordinates=all_cord)
 
 @app.route('/test', methods=['GET', 'POST'])
 def upload_file():
